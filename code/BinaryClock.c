@@ -80,7 +80,7 @@ uint8_t btns_prev;
 ISR(PCINT0_vect) {
 	uint8_t btns = PINA ^ btns_prev;
 	btns_prev = PINA;
-
+	
 	if ((PINA & (1 << PA2)) == 0 && (btns & (1 << PA2)) != 0) {
 		/* S1 pressed */
 		s1();
@@ -94,7 +94,7 @@ ISR(PCINT0_vect) {
 		s3();
 	}
 }
-	
+
 ISR(TIM1_COMPA_vect) {
 	tick();
 }
@@ -146,8 +146,7 @@ void set_time() {
 }
 
 
-int main(void)
-{
+int main(void) {
 	/* disable /8 system clock prescaler */
 	CLKPR = 0x80;
 	CLKPR = 0x00;
@@ -185,22 +184,13 @@ int main(void)
 	ADMUX = (1 << MUX0);
 	ADCSRA = (1 << ADEN) | (1 << ADSC) | (1 << ADIE) | (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 	ADCSRB = (1 << ADLAR);
-	// DIDR0 = ~((1 << ADC1D) | (1 << ADC0D));
 	
 	/* enable global interrupts */
 	sei();
 	
-	
-	
-	/*while (1) {
-		update_time();
-		_delay_ms(100);
-	}*/
-	
-    while(1);
-	return 0;
+	while(1);
+		return 0;
 }
-
 
 
 /* application logic */
